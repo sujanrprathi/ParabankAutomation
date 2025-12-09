@@ -3,15 +3,15 @@ package web.parabank.framework.core;
 public class Session
 {
     private static String browser, baseurl;
-    public void Session(){
+    public Session(){
 
         browser=System.getProperty("browser","chrome");
         baseurl=System.getProperty("url");
     }
-    public static String getBrowser(){
+    public String getBrowser(){
         return browser.toLowerCase();
     }
-    public static String getBaseurl(){
+    public String getBaseurl(){
         return baseurl;
     }
 

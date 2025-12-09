@@ -1,0 +1,6 @@
+{
+  "base_url": "https://parabank.parasoft.com/parabank/services/bank",
+  "env": "qa",
+  "username": "john",
+  "password": "demo"
+}

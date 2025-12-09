@@ -11,25 +11,40 @@ import java.util.Objects;
 
 public class DriverManager {
 
-    DriverHelper dh=new DriverHelper();
-    private static ThreadLocal<WebDriver> driver=new ThreadLocal<>();
-    public void webDriverManager(String url, String browser){
-        WebDriver webDriver = null;
-        switch (browser){
-            case "chrome":
-                WebDriverManager.chromedriver().setup();
-                webDriver=new ChromeDriver();
-                break;
+     DriverHelper dh=new DriverHelper();
+    private static final ThreadLocal<WebDriver> driver = new ThreadLocal<>();
 
-            case "edge":
-                WebDriverManager.edgedriver().setup();
-                webDriver=new EdgeDriver();
-                break;
+    public WebDriver getDriver(String browser, String url) {
+        if(driver.get()==null) {
+            switch (browser) {
+                case "chrome":
+                    WebDriverManager.chromedriver().setup();
+                    driver.set(new ChromeDriver());
+                    break;
 
-            case "firefox":
-                WebDriverManager.firefoxdriver().setup();
-                webDriver=new FirefoxDriver();
+                case "edge":
+                    WebDriverManager.edgedriver().setup();
+                    driver.set(new EdgeDriver());
+                    break;
+
+                case "firefox":
+                    WebDriverManager.firefoxdriver().setup();
+                    driver.set(new FirefoxDriver());
+                    break;
+
+                default:
+                    throw new IllegalArgumentException("Unsupported Browser " + browser);
+            }
+            driver.get().get(url);
+            dh.implicitWait(driver.get(),10);
+            dh.maxWindow(driver.get());
         }
-    dh.implicitWait(webDriver,10);
+        return driver.get();
+    }public void quitDriver(){
+        if(driver.get()!=null) {
+            driver.get().quit();
+            driver.remove();
+        }
     }
+
 }

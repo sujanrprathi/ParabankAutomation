@@ -10,4 +10,7 @@ public class DriverHelper {
     public void implicitWait(WebDriver driver, int timeinseconds){
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(timeinseconds));
     }
+    public void maxWindow(WebDriver driver){
+        driver.manage().window().maximize();
+    }
 }
